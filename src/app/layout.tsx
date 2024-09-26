@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Navbar } from "@/components";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,10 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex gap-2`}
       >
-
-        <p>Root Layout</p>
+        <Navbar />        
 
         {/* <button className="px-4 py-2 rounded-md bg-indigo-500 text-white hover:bg-indigo-600">Save</button> */}
 
