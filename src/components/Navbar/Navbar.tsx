@@ -3,14 +3,14 @@ import { cn } from "@/helpers/cn";
 import { NavbarList } from "./NavbarList";
 import { NavbarLisItemLink } from "./NavbarLisItemLink";
 import { NavbarProps } from "./types";
-import { NavbarListItemButton } from "./NavbarListItemButton";
+import Image from 'next/image';
 
 export const Navbar = ({ className, ...props } : NavbarProps) => {
     return (
         <nav {...props} className={ cn("h-screen flex flex-col bg-slate-900 border-r border-indigo-400/20 w-72 p2 hover:border-indico-400/40 text-slate-300", className) }> 
           <div className="flex items-center justify-center my-4"> 
             
-            <img 
+            <Image width={112} height={32}
               className="w-auto h-12 p-2" 
               src="https://emersonbroga.com/e/assets/emersonbroga-logo-name-pink.png" 
               alt="Logo Emerson Broga" />
