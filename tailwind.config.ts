@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'slate-890': 'rgb(var(--color-slate-890) / <alpha-value>)'
       },
     },
   },
