@@ -1,25 +1,9 @@
 import { HomeIcon, GamePadIcon, Top10, WalkIcon, FaceHappyIcon } from "@/components";
 import { cn } from "@/helpers/cn";
-
-type NavbarProps = React.ComponentProps<"nav">;
-type NavbarListProps = React.ComponentProps<"ul">;
-type NavbarListItemProps = React.ComponentProps<"li">;
-
-const NavbarList = ({ children, className, ...props }: NavbarListProps) => {
-  return (
-    <ul className={ cn ("my-4 border-t border-indigo-400/20 hover:border-indigo-400/40", className)} {...props}>
-      {children}
-    </ul>
-  );
-};
-
-const NavbarListItem = ({ children, className, ...props }: NavbarListItemProps) => {
-  return (
-    <li {...props} className={ cn("my-2 rounded-lg bg-transparent p-2 hover:bg-indigo-400/40 hover:text-slate-100 cursor-pointer flex gap-2 items-center", className)}>
-      {children}
-    </li>
-  );
-};
+import { NavbarList } from "./NavbarList";
+import { NavbarLisItemLink } from "./NavbarLisItemLink";
+import { NavbarProps } from "./types";
+import { NavbarListItemButton } from "./NavbarListItemButton";
 
 export const Navbar = ({ className, ...props } : NavbarProps) => {
     return (
@@ -31,24 +15,35 @@ export const Navbar = ({ className, ...props } : NavbarProps) => {
               src="https://emersonbroga.com/e/assets/emersonbroga-logo-name-pink.png" 
               alt="Logo Emerson Broga" />
           </div>
+
           <NavbarList className={"flex-grow"}>
-            <NavbarListItem>
+
+            <NavbarLisItemLink href="/">
               <HomeIcon className="w-4 h-4" />Home
-            </NavbarListItem>
-            <NavbarListItem>
+            </NavbarLisItemLink>
+
+            <NavbarLisItemLink href="/games">
               <GamePadIcon className="w-4 h-4" />Games
-            </NavbarListItem>
-            <NavbarListItem>
+            </NavbarLisItemLink>
+
+            <NavbarLisItemLink href="/top-10">
               <Top10 className="w-4 h-4" />Top 10
-            </NavbarListItem>
-            <NavbarListItem>
+            </NavbarLisItemLink>
+
+            <NavbarLisItemLink href="/walkthroughs">
               <WalkIcon className="w-4 h-4" />Walkthroughs
-            </NavbarListItem>
+            </NavbarLisItemLink>
+
+            {/* <NavbarListItemButton>
+              <WalkIcon className="w-4 h-4" />Botão teste
+            </NavbarListItemButton> */}
+
           </NavbarList>
+
           <NavbarList>
-            <NavbarListItem>
+            <NavbarLisItemLink href="user">
               <FaceHappyIcon className="w-4 h-4" />User
-            </NavbarListItem>
+            </NavbarLisItemLink>
           </NavbarList>
         </nav>
     )
