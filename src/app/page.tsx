@@ -1,4 +1,5 @@
-
+import articles from '@/data/articles.json';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -21,61 +22,26 @@ export default function Home() {
 
           <div className="col-span-8  flex flex-col gap-4">
 
-            { /* ITEM  */}
-            <div className="flex gap-4 bg-purple-500 rounded-md">
-              <div>
-                <img className="w-auto h-[200px]" src="https://placehold.co/600x400/EEE/31343C" alt="descrição da imagem" />
-              </div>
+            {
+            articles.map((article) => {
+                return(
+                  <div key={article.title} className="flex bg-slate-800 rounded-md py-4">
+                    <div>
+                      <Image className='h-full w-full object-cover transition duration-500 hover:scale-105 rounded-r-lg'
+                      src={`/assets/images/articles/${article.image}`} alt={article.title} width={600} height={400} />
+                    </div>
 
-              <div className="flex flex-col gap-2 py-4">
-                <h2 className="text-3xl">Algum título</h2>
-                <p className="flex-grow">Alguma descrição</p>
-                <button>Ler mais</button>
-              </div>
-            </div>
-            { /* ITEM  */}
+                    <div className="flex flex-col gap-2 py-4">
+                      <h2 className="text-3xl">{article.title}</h2>
+                      <p className="flex-grow">{article.excerpt}</p>
+                      <button>Ler mais</button>
+                    </div>
+                  </div>
+                );
+              })
+            };
 
-            { /* ITEM  */}
-            <div className="flex gap-4 ">
-              <div>
-                <img className="w-auto h-[200px]" src="https://placehold.co/600x400/EEE/31343C" alt="descrição da imagem" />
-              </div>
-
-              <div className="flex flex-col gap-2 py-4">
-                <h2 className="text-3xl">Algum título</h2>
-                <p className="flex-grow">Alguma descrição</p>
-                <button>Ler mais</button>
-              </div>
-            </div>
-            { /* ITEM  */}
-
-            { /* ITEM  */}
-            <div className="flex gap-4">
-              <div>
-                <img className="w-auto h-[200px]" src="https://placehold.co/600x400/EEE/31343C" alt="descrição da imagem" />
-              </div>
-
-              <div className="flex flex-col gap-2 py-4">
-                <h2 className="text-3xl">Algum título</h2>
-                <p className="flex-grow">Alguma descrição</p>
-                <button>Ler mais</button>
-              </div>
-            </div>
-            { /* ITEM  */}
-
-            { /* ITEM  */}
-            <div className="flex gap-4">
-              <div>
-                <img className="w-auto h-[200px]" src="https://placehold.co/600x400/EEE/31343C" alt="descrição da imagem" />
-              </div>
-
-              <div className="flex flex-col gap-2 py-4">
-                <h2 className="text-3xl">Algum título</h2>
-                <p className="flex-grow">Alguma descrição</p>
-                <button>Ler mais</button>
-              </div>
-            </div>
-            { /* ITEM  */}
+          
 
           </div>
           <div className="col-span-4 bg-purple-500">
