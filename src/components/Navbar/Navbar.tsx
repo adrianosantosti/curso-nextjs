@@ -7,7 +7,8 @@ import Image from 'next/image';
 
 export const Navbar = ({ className, ...props } : NavbarProps) => {
     return (
-        <nav {...props} className={ cn("h-screen flex flex-col bg-slate-900 border-r border-indigo-400/20 w-72 p2 hover:border-indico-400/40 text-slate-300", className) }> 
+        <nav {...props} className={ cn(
+          "fixed top-0 left-0 h-screen flex flex-col bg-slate-900 border-r border-indigo-400/20 w-72 p2 hover:border-indico-400/40 text-slate-300", className) }> 
           <div className="flex items-center justify-center my-4"> 
             
             <Image width={112} height={32}
