@@ -1,4 +1,4 @@
-import { Pagination } from '@/components';
+import { PageWrapper, Pagination } from '@/components';
 import ArticleService from '@/services/Articles';
 import Image from 'next/image';
 
@@ -12,7 +12,7 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
   //console.log("***", articles);
 
   return (
-    <div className="ml-72">
+    <PageWrapper>
       <div className="w-full h-[35vh] bg-orange-400 flex-center">
         <p>Algo chamativo</p>
       </div>
@@ -82,6 +82,6 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
         </div>
       </div>
 
-    </div>
+    </PageWrapper>
   )
 }
