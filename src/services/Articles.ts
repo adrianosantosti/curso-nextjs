@@ -62,6 +62,10 @@ const ArticleService = {
                 totalPages
             }
         };
+    },
+
+    getArticleBySlug: async (slug: string) => {
+       return Article.getOne({ where: { slug } });
     }
 
 };
