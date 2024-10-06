@@ -1,16 +1,17 @@
 import { Hero, PageWrapper, Pagination } from '@/components';
+import { HomeLatestArticles, HomeLatestArticlesSkeleton } from '@/sections';
 import ArticleService from '@/services/Articles';
 import GamesService from '@/services/Games';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function Home({searchParams}: {searchParams?: { page?: string, limit?: string  }}) {
 
   const currentPage = Number(searchParams?.page) || 1;
   const limit = Number(searchParams?.limit) || 10;
-
   const articles = await ArticleService.getHomeArticles(currentPage, limit);
-  const latestArticles = await ArticleService.getHomeLatestArticles();
+  
   //console.log("***", articles);
 
   const heroGames = await GamesService.getRandomGames(50);
@@ -18,35 +19,13 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
   return (
     <PageWrapper>
       
-        <Hero games={heroGames.data} />
+      <Hero games={heroGames.data} />
+
+      <Suspense fallback={<HomeLatestArticlesSkeleton />}>
+        <HomeLatestArticles />
+      </Suspense> 
       
-
-      <div className="container mx-auto my-10">
-        <h2 className="text-3xl my-6">Latest Articles</h2>
-
-        <div className="grid grid-cols-4 gap-4 h-[35vh]">
-          {latestArticles.data.map((article) => {
-            return (
-
-            <Link key={article.title} href={`/article/${article.slug}`} className='flex-center relative overflow-hidden'>
-                <div className='h-full w-full'>
-                <Image className='h-full w-full object-cover transition duration-500 hover:scale-105'
-                          src={`/assets/images/articles/${article.image}`} alt={article.title} width={600} height={400} />
-                </div>
-                <p className='absolute bottom-0 pt-6 pb-2 px-2 bg-gradient-to-t from-slate-900 via-slate-800 to-transparent w-full'>
-                  {article.title}
-                </p>
-            </Link>
-            )
-          })}
-
-          {/* <div className="flex-center bg-indigo-500">A</div>
-          <div className="flex-center bg-purple-500">B</div>
-          <div className="flex-center bg-blue-500">C</div>
-          <div className="flex-center bg-emerald-500">D</div> */}
-        </div>
-      </div>
-
+      
       <div className="container mx-auto my-10">
         <h3 className="text-3xl my-6">Articles</h3>
 

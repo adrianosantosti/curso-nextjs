@@ -21,7 +21,7 @@ export default async function Games({ searchParams }: { searchParams?: { page?: 
                     {
                     games.data.map((game) => {
                         return (
-                            <Link key={game.id} href={`/games/${game.slug}`} key={game.slug} className='flex-center flex-col relative overflow-hidden'>
+                            <Link key={game.id} href={`/games/${game.slug}`} className='flex-center flex-col relative overflow-hidden'>
                                 <div className='h-full w-full'>
                                 <Image className='h-full w-full object-cover transition duration-500 hover:scale-105'
                                         src={getGameImage(game.image)} alt={game.title} width={600} height={400} />
