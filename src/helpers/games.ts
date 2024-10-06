@@ -1,4 +1,4 @@
-//const BASE_GAME_URL = "https://raw.githubsercontent.com/emersonbroga/nintendo-64-games/main/images/";
+//const BASE_GAME_URL = "https://github.com/emersonbroga/nintendo-64-games/blob/main/images";
 const BASE_GAME_URL = "/assets/images/games/";
 
 

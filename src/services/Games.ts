@@ -2,6 +2,10 @@ import Games from "@/libs/database/Games";
 
 const GamesService = {
 
+    getGameBySlug: async (slug: string) => {
+        return await Games.getOne({ where: { slug } })
+    },
+
     getGamesList: async (page=1, limit=10) => {
         // QUANTOS ITENS VAMOS PULAR 
         const offset = (page - 1) * limit;

@@ -2,6 +2,7 @@ import { PageWrapper, Pagination } from "@/components";
 import { getGameImage } from "@/helpers/games";
 import GamesService from "@/services/Games";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Games({ searchParams }: { searchParams?: { page?: string; limit?: string } }) {
 
@@ -20,7 +21,7 @@ export default async function Games({ searchParams }: { searchParams?: { page?: 
                     {
                     games.data.map((game) => {
                         return (
-                            <div key={game.slug} className='flex-center flex-col relative overflow-hidden'>
+                            <Link key={game.id} href={`/games/${game.slug}`} key={game.slug} className='flex-center flex-col relative overflow-hidden'>
                                 <div className='h-full w-full'>
                                 <Image className='h-full w-full object-cover transition duration-500 hover:scale-105'
                                         src={getGameImage(game.image)} alt={game.title} width={600} height={400} />
@@ -28,7 +29,7 @@ export default async function Games({ searchParams }: { searchParams?: { page?: 
                                 <p className=' pt-2 pb-2 px-2  w-full'>
                                 {game.title}
                                 </p>
-                            </div>
+                            </Link>
                         )
                     })
                     }
