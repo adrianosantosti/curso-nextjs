@@ -26,7 +26,7 @@ export default function TextInput({label, type="text", name, className, error, .
 
             {error ? 
                 <div className="my-2">
-                    <small className="text-sm text-red-500">error</small>
+                    <small className="text-sm text-red-500">{error}</small>
                 </div> 
             : null
             }
