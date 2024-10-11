@@ -1,6 +1,7 @@
 "use server";
-
+import {z, ZodError} from 'zod';
 import UsersService from "@/services/Users";
+
 export type SignUpError = {
     name?: string;
     email?: string;
@@ -13,6 +14,7 @@ export type SignUpState = {
     errors: SignUpError
 };
 
+// validação manual
 const validadeSignUpform = (formData: FormData) => {
 
     const errors : SignUpError = {
@@ -65,11 +67,52 @@ const validadeSignUpform = (formData: FormData) => {
     }
 }
 
+const validadeSignUpformZod = (formData: FormData) => {
+
+    const checkPasswords = (data: any) => {
+        return data.password === data.passwordConfirmation;
+    };
+
+    const checkPasswordsErros = { message: "Password confirmation doesn't match", path: ["passwordConfirmation"] };
+
+   const userSchema = z.object({
+    name: z.string().min(3, "Name must have at least 3 chars"),
+    email: z.string().email("Email invalid"),
+    password: z.string().min(10, "Password must have at least 10 chars"),
+    passwordConfirmation: z.string().min(10, "Password confirmation must have at least 10 chars"),
+   }).refine(checkPasswords, checkPasswordsErros);
+
+   try 
+   {
+    userSchema.parse(Object.fromEntries(formData)); 
+    return { isValid: true, errors: {} };
+   } 
+   catch (error: unknown) {
+    const isZodError = error instanceof ZodError;
+
+    if(isZodError)
+    {
+        const { fieldErrors } = error.flatten();
+
+        const errors = Object.keys(fieldErrors).reduce((acc, key) => {
+            const message = fieldErrors[key]?.at(0);
+            return { ...acc, [key]: message }
+        }, {});
+
+        return { isValid: false, errors };
+    }
+
+    //console.log(error);
+   }
+
+   return { isValid: false, errors: {}};
+}
+
 export const handleSignUpForm = async (prevState: any, formData: FormData) => {
 
     //console.log('handleSignUpForm', Object.fromEntries(formData));
     console.log('passou aqui');
-    const validation = validadeSignUpform(formData);
+    const validation = validadeSignUpformZod(formData);
 
     console.log('passou aqui 2');
     if (!validation.isValid)
@@ -84,8 +127,8 @@ export const handleSignUpForm = async (prevState: any, formData: FormData) => {
         password: formData.get("password") as string,
     }
 
-    const record = await UsersService.signUp(data);
-    console.log('usuário incluído', record);
+    //const record = await UsersService.signUp(data);
+    console.log('usuário incluído');
 
-    return { ...prevState, isValid: true};
+    return { isValid: true, errors: {} };
 }
