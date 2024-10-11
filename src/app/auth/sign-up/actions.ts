@@ -1,6 +1,7 @@
 "use server";
 import {z, ZodError} from 'zod';
 import UsersService from "@/services/Users";
+import { redirect } from 'next/navigation';
 
 export type SignUpError = {
     name?: string;
@@ -15,57 +16,57 @@ export type SignUpState = {
 };
 
 // validação manual
-const validadeSignUpform = (formData: FormData) => {
+// const validadeSignUpform = (formData: FormData) => {
 
-    const errors : SignUpError = {
-        name:undefined,
-        email:undefined,
-        password:undefined,
-        passwordConfirmation:undefined,
-    };
+//     const errors : SignUpError = {
+//         name:undefined,
+//         email:undefined,
+//         password:undefined,
+//         passwordConfirmation:undefined,
+//     };
 
-    const name = String(formData.get("name"));
-    const email = String(formData.get("email"));
-    const password = String(formData.get("password"));
-    const passwordConfirmation = String(formData.get("passwordConfirmation"));
+//     const name = String(formData.get("name"));
+//     const email = String(formData.get("email"));
+//     const password = String(formData.get("password"));
+//     const passwordConfirmation = String(formData.get("passwordConfirmation"));
 
-    try 
-    {
-        if (!name){
-            errors.name = "Name is required";
-           // throw new Error(errors.name);
-        }
+//     try 
+//     {
+//         if (!name){
+//             errors.name = "Name is required";
+//            // throw new Error(errors.name);
+//         }
 
-        if (!email){
-            errors.email = "Email is required";
-           // throw new Error(errors.email);
-        }
+//         if (!email){
+//             errors.email = "Email is required";
+//            // throw new Error(errors.email);
+//         }
 
-        if (!email.includes('@')){
-            errors.email = "Email is not valid";
-            //throw new Error(errors.email);
-        }
+//         if (!email.includes('@')){
+//             errors.email = "Email is not valid";
+//             //throw new Error(errors.email);
+//         }
 
-        if (password.length < 10){
-            errors.password = "Password should have 10 chars";
-           // throw new Error(errors.password);
-        }
+//         if (password.length < 10){
+//             errors.password = "Password should have 10 chars";
+//            // throw new Error(errors.password);
+//         }
 
-        if (!password || password != passwordConfirmation){
-            errors.passwordConfirmation = "Password confirmation doesn't match";
-           // throw new Error(errors.passwordConfirmation);
-        }
+//         if (!password || password != passwordConfirmation){
+//             errors.passwordConfirmation = "Password confirmation doesn't match";
+//            // throw new Error(errors.passwordConfirmation);
+//         }
 
-        const isValid = Object.values(errors).every((v) => v === undefined);
-        //Object.values(errors);
+//         const isValid = Object.values(errors).every((v) => v === undefined);
+//         //Object.values(errors);
 
-        return {isValid, errors};
-    } 
-    catch 
-    {
-        return {isValid: false, errors};
-    }
-}
+//         return {isValid, errors};
+//     } 
+//     catch 
+//     {
+//         return {isValid: false, errors};
+//     }
+// }
 
 const validadeSignUpformZod = (formData: FormData) => {
 
@@ -127,8 +128,9 @@ export const handleSignUpForm = async (prevState: any, formData: FormData) => {
         password: formData.get("password") as string,
     }
 
-    //const record = await UsersService.signUp(data);
-    console.log('usuário incluído');
+    await UsersService.signUp(data);
+    //console.log('usuário incluído');
+    redirect('/');
 
     return { isValid: true, errors: {} };
 }
