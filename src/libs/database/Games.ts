@@ -9,6 +9,7 @@ const GamesDataBase = {
         const record = prisma.games.findUnique({where});
         return record;
     },
+
     get: async ({ where = {}, orderBy = {}, limit = 10, offset = 0 }) =>{
 
         const take = Math.min(limit, MAX_RECORDS);
@@ -23,6 +24,7 @@ const GamesDataBase = {
 
         return records;
     },
+    
     count: async ({ where = {}}) =>{
 
         const count = await prisma.games.count({
