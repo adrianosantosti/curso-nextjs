@@ -1,14 +1,16 @@
 import { PageWrapper } from "@/components";
+import { getArticleImage } from "@/helpers/articles";
 import ArticleService from "@/services/Articles";
 import Image from "next/image";
 
-export default async function ArticleDetailPage({params}: {params: {slug: string}}) {
+type ArticleDetailPageType = {
+    params: {slug: string}
+}
 
-    //console.log(params.slug);
+export default async function ArticleDetailPage({ params }: ArticleDetailPageType) {
+    
     const slug = params.slug;
     const article = await ArticleService.getArticleBySlug(slug);
-
-    //console.log("Article *********", article);
 
     if (!article){
         return null;
@@ -22,7 +24,10 @@ export default async function ArticleDetailPage({params}: {params: {slug: string
                 
                     <h1 className="text-3xl my-6">{article.title}</h1>
                     <Image className='my-6 h-full w-full object-cover rounded-lg'
-                          src={`/assets/images/articles/${article.image}`} alt={article.title} width={600} height={400} />
+                          src={getArticleImage(article.image)} 
+                          alt={article.title} 
+                          width={600} 
+                          height={400} />
 
                     <div className="my-6 flex flex-col">
                         <p className="my-2 p-2 bg-slate-700 rounded">{article.excerpt}</p>

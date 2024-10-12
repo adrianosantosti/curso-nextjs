@@ -70,7 +70,7 @@ export type SignUpState = {
 
 const validadeSignUpformZod = (formData: FormData) => {
 
-    const checkPasswords = (data: any) => {
+    const checkPasswords = (data: { password: string, passwordConfirmation: string}) => {
         return data.password === data.passwordConfirmation;
     };
 
@@ -85,25 +85,24 @@ const validadeSignUpformZod = (formData: FormData) => {
 
    try 
    {
-    userSchema.parse(Object.fromEntries(formData)); 
-    return { isValid: true, errors: {} };
+        userSchema.parse(Object.fromEntries(formData)); 
+        return { isValid: true, errors: {} };
    } 
-   catch (error: unknown) {
-    const isZodError = error instanceof ZodError;
+   catch (error: unknown) 
+   {
+        const isZodError = error instanceof ZodError;
 
-    if(isZodError)
-    {
-        const { fieldErrors } = error.flatten();
+        if(isZodError)
+        {
+            const { fieldErrors } = error.flatten();
 
-        const errors = Object.keys(fieldErrors).reduce((acc, key) => {
-            const message = fieldErrors[key]?.at(0);
-            return { ...acc, [key]: message }
-        }, {});
+            const errors = Object.keys(fieldErrors).reduce((acc, key) => {
+                const message = fieldErrors[key]?.at(0);
+                return { ...acc, [key]: message }
+            }, {});
 
-        return { isValid: false, errors };
-    }
-
-    //console.log(error);
+            return { isValid: false, errors };
+        }
    }
 
    return { isValid: false, errors: {}};

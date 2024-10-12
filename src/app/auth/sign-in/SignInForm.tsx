@@ -12,8 +12,6 @@ export default function SignInForm() {
     };
 
     const [state, formAction] = useFormState(handleSignInForm, initialState);
-    //console.log('passou aqui 4');
-    //console.log("*** state", state);
 
     return (
         <form action={formAction}>
@@ -22,7 +20,6 @@ export default function SignInForm() {
             <TextInput name="password" label="Password" type="password" error={state.errors?.password} />
 
             <SubmitButton label="Log In" />
-            
         </form>
     )
 }

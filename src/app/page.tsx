@@ -41,7 +41,10 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
 
                         <div className='h-40 rounded-r-lg overflow-hidden'>
                           <Image className='h-full w-full object-cover transition duration-500 hover:scale-105 rounded-r-lg'
-                          src={`/assets/images/articles/${article.image}`} alt={article.title} width={600} height={400} />
+                          src={`/assets/images/articles/${article.image}`} 
+                          alt={article.title} 
+                          width={600} 
+                          height={400} />
                         </div>
                         
                       </div>
@@ -50,7 +53,9 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
                         <h2 className="text-3xl mb-4 text-indigo-400">{article.title}</h2>
                         <p className="flex-grow">{article.publishedAt.toISOString()}</p>
                         <p className="flex-grow">{article.excerpt}</p>
-                        <Link href={`/article/${article.slug}`} className='bg-slate-700 hover:bg-indigo-400/40 rounded-lg px-4 py-2 inline max-w-max'>Ler mais</Link>
+
+                        <Link href={`/article/${article.slug}`} 
+                        className='bg-slate-700 hover:bg-indigo-400/40 rounded-lg px-4 py-2 inline max-w-max'>Ler mais</Link>
                       </div>
                     </div>
                   )
@@ -64,7 +69,7 @@ export default async function Home({searchParams}: {searchParams?: { page?: stri
 
           </div>
           <div className="col-span-4 bg-purple-500">
-            b
+            
           </div>
          
         </div>

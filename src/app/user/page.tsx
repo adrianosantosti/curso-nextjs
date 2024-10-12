@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 export default async function User() {
 
     const user = await getSession();
-
     if (!user) redirect("/auth/sign-in");
 
     return (
