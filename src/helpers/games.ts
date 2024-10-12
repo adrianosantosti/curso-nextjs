@@ -7,3 +7,7 @@ export const getGameImage = (image:string) => {
         `${BASE_GAME_URL}${image}`
     );
 }
+
+export const getGameUrl = (slug: string) => {
+    return `/games/${slug}`;
+}
