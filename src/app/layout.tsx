@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components";
 import { getSession } from "@/helpers/session";
+import { date } from "zod";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +28,14 @@ export default async function RootLayout({
 }>) {
 
   const user = await getSession();
+
+  if (user && user.iat && user.exp) {
+    console.log('iat', new Date(user.iat * 1000).toISOString());
+    console.log('exp', new Date(user.exp * 1000).toISOString());
+  }
+  else{
+    console.log("usuário não logado");
+  }
   //console.log("usuário logado session", user);
 
   return (
