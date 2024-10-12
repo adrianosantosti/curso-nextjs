@@ -12,8 +12,8 @@ export default function SignInForm() {
     };
 
     const [state, formAction] = useFormState(handleSignInForm, initialState);
-    console.log('passou aqui 4');
-    console.log("*** state", state);
+    //console.log('passou aqui 4');
+    //console.log("*** state", state);
 
     return (
         <form action={formAction}>

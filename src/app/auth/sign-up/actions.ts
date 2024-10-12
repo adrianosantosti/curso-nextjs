@@ -79,8 +79,8 @@ const validadeSignUpformZod = (formData: FormData) => {
    const userSchema = z.object({
     name: z.string().min(3, "Name must have at least 3 chars"),
     email: z.string().email("Email invalid"),
-    password: z.string().min(10, "Password must have at least 10 chars"),
-    passwordConfirmation: z.string().min(10, "Password confirmation must have at least 10 chars"),
+    password: z.string().min(6, "Password must have at least 6 chars"),
+    passwordConfirmation: z.string().min(6, "Password confirmation must have at least 6 chars"),
    }).refine(checkPasswords, checkPasswordsErros);
 
    try 

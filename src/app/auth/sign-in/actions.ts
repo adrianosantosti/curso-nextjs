@@ -1,7 +1,12 @@
 "use server";
-import {z, ZodError} from 'zod';
-//import UsersService from "@/services/Users";
+import {isValid, z, ZodError} from 'zod';
+import UsersService from "@/services/Users";
 import { redirect } from 'next/navigation';
+import { encrypt } from '@/helpers/jwt';
+import { error } from 'console';
+import { cookies } from 'next/headers';
+import { createSession } from '@/helpers/session';
+import { revalidatePath } from 'next/cache';
 
 export type SignInError = {
     email?: string;
@@ -18,7 +23,7 @@ const validadeSignInformZod = (formData: FormData) => {
 
    const userSchema = z.object({
     email: z.string().email("Email invalid"),
-    password: z.string().min(10, "Password must have at least 10 chars"),
+    password: z.string().min(6, "Password must have at least 6 chars"),
    });
 
    try 
@@ -51,10 +56,10 @@ export const handleSignInForm = async (prevState: any, formData: FormData) => {
 
     const validation = validadeSignInformZod(formData);
 
-    console.log('passou aqui 2');
+   // console.log('passou aqui 2');
     if (!validation.isValid)
     {
-        console.log('passou aqui3');
+       // console.log('passou aqui3');
         return {...prevState, ...validation};
     }
 
@@ -63,9 +68,25 @@ export const handleSignInForm = async (prevState: any, formData: FormData) => {
         password: formData.get("password") as string,
     }
 
-    //await UsersService.signUp(data);
-    console.log('usuário localizado');
-    redirect('/');
+    const user = await UsersService.signIn(data);
 
-    return { isValid: true, errors: {} };
+    if (!user)
+        return { isValid: false, errors: {} };
+
+    const payload = {
+        uuid: user.uuid,
+        name: user.name,
+        email: user.email,
+    }
+
+    const jwt = await encrypt(payload);
+    //console.log('jwt', jwt);
+
+    createSession(jwt);
+    revalidatePath("/");
+
+    //await UsersService.signUp(data);
+    // console.log('usuário localizado', user);
+   // 
+    return redirect('/');
 }
