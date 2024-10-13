@@ -6,7 +6,7 @@ import { slugify } from '../../src/helpers/slugify';
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log("Iniciando seed");
+    //console.log("Iniciando seed");
     const [,,...args] = process.argv;
 
     const isDev = process.env.NODE_ENV == 'development';
@@ -102,7 +102,7 @@ async function truncateArticles(){
     console.log("truncate articles", isTruncateArticles);
 }
 
-async function truncateGamesAndGenres(){
+async function truncateGamesAndGenres() {
     //console.log("truncate games and genres");
 
     // delete all records
@@ -120,12 +120,29 @@ async function truncateGamesAndGenres(){
     console.log("Truncate Games", isTruncateGames);
 }
 
-main().then(async() => {
+// main().then(async() => {
 
-    await prisma.$disconnect();
+//     await prisma.$disconnect();
 
-}).catch(async(e) => {
-    console.log(e);
-    await prisma.$disconnect();
-    process.exit(1);
-});
+// }).catch(async(e) => {
+//     console.log(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+// });
+
+export const truncate = async () => {
+    console.log('Truncate Article');
+    await truncateArticles();
+
+    console.log('Truncate Games and Genres');
+    await truncateGamesAndGenres();
+}
+
+
+export const seed = async () => {
+    console.log('Seeding Articles');
+    await seedArticles();
+
+    console.log('Seeding Games');
+    await seedGamesAndGenres();
+}
